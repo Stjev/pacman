@@ -1,29 +1,49 @@
 import pygame as pg
+import time
+
+from input_handler import Input_handler
+from painter import Painter
+from entity import Pacman
+
+from locations import Movement
 
 
-def get_input():
-    pass
+def get_input(pacman, event):
+    Input_handler.get_input(pacman, event)
 
 
 def update():
-    pass
+    return
 
 
-def draw():
-    pass
+def setup():
+    pg.init()
+    size = width, height = 448, 496
+    screen = pg.display.set_mode(size)
+    pg.display.set_caption('Pacman')
+
+    return screen
+
+# TODO: https://stackoverflow.com/questions/54981456/how-to-implement-a-pygame-timed-game-loop
 
 
 def start_game():
-    pg.init()
+    screen = setup()
 
-    size = width, height = 320, 240
+    pacman = Pacman()
+    painter = Painter(screen, pacman, None, None, None, None)
 
-    screen = pg.display.set_mode(size)
+    counter = 0
 
     while 1:
-        get_input()
-        update()
-        draw_models()
+        event = pg.event.get()
+        get_input(pacman, event)
+
+        if counter > 500:
+            update()
+            painter.draw()
+
+        pg.display.flip()
 
 
 if __name__ == '__main__':
