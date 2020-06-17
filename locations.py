@@ -26,7 +26,10 @@ class Coordinate:
         self.y += y
 
     def to_screen_coordinate(self):
-        return [self.x * 16 - 10, self.y * 16.3 - 10]
+        return [self.x * 16 - 2, self.y * 16 - 2]
+
+    def __str__(self):
+        return "(" + str(self.x) + ", " + str(self.y) + ")"
 
 
 class Movement(enum.Enum):
