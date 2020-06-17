@@ -21,15 +21,15 @@ class Entity:
 
     def move(self, movement):
         if movement == Movement.UP:
-            self.location.add(0, -1)
+            self.location.add_if_valid(0, -1)
         elif movement == Movement.RIGHT:
             self.direction = movement
-            self.location.add(1, 0)
+            self.location.add_if_valid(1, 0)
         elif movement == Movement.DOWN:
-            self.location.add(0, 1)
+            self.location.add_if_valid(0, 1)
         elif movement == Movement.LEFT:
             self.direction = movement
-            self.location.add(-1, 0)
+            self.location.add_if_valid(-1, 0)
 
 
 class Ghost(Entity):

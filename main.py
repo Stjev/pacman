@@ -43,7 +43,7 @@ def start_game():
 
         pg.display.update()
 
-        clock.tick(1)
+        clock.tick(2)
 
 
 if __name__ == '__main__':
