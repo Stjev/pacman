@@ -15,4 +15,3 @@ class Painter():
     def draw(self):
         self.screen.blit(self.bg, [0, 0])  # draw the background
         self.pacman.draw(self.screen)
-

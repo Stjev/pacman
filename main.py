@@ -8,10 +8,6 @@ from entity import Pacman
 from locations import Movement
 
 
-def get_input(pacman, event):
-    Input_handler.get_input(pacman, event)
-
-
 def update():
     return
 
@@ -33,17 +29,21 @@ def start_game():
     pacman = Pacman()
     painter = Painter(screen, pacman, None, None, None, None)
 
-    counter = 0
+    input_handler = Input_handler()
+
+    clock = pg.time.Clock()
 
     while 1:
-        event = pg.event.get()
-        get_input(pacman, event)
+        events = pg.event.get()
 
-        if counter > 500:
-            update()
-            painter.draw()
+        input_handler.get_input(pacman, events)
 
-        pg.display.flip()
+        update()
+        painter.draw()
+
+        pg.display.update()
+
+        clock.tick(1)
 
 
 if __name__ == '__main__':
