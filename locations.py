@@ -12,10 +12,13 @@ class Location:
         self.width, self.height = len(self.locations[0]), len(self.locations)
 
         self.valid = list()
+        self.ghost_only = list()
         for y, row in enumerate(self.locations):
             for x, field_val in enumerate(row):
                 if field_val in [0, 6, 8]:
                     self.valid.append(Coordinate(x, y))
+                if field_val == 2:
+                    self.ghost_only.append(Coordinate(x, y))
 
     @staticmethod
     def get_instance():
@@ -26,6 +29,9 @@ class Location:
 
     def is_valid(self, coordinate):
         return coordinate in self.valid
+
+    def is_valid_for_ghosts(self, coordinate):
+        return coordinate in self.valid or coordinate in self.ghost_only
 
 
 class Coordinate:
@@ -38,14 +44,20 @@ class Coordinate:
         self.y += y
 
     def add_if_valid(self, x, y):
+        locations = Location.get_instance()
+        self.__add_if_valid(x, y, locations.is_valid)
+
+    def add_if_valid_for_ghosts(self, x, y):
+        locations = Location.get_instance()
+        self.__add_if_valid(x, y, locations.is_valid_for_ghosts)
+
+    def __add_if_valid(self, x, y, validator):
         """
         This will only add the given x, y if the coordinate would become a valid new coordinate
         """
-        locations = Location.get_instance()
-
         newCoordinate = self.add_create_new_coord(x, y)
 
-        if locations.is_valid(newCoordinate):
+        if validator(newCoordinate):
             self.copy(newCoordinate)
 
     def add_create_new_coord(self, x, y):

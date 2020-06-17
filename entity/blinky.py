@@ -7,8 +7,7 @@ from locations import Coordinate, Movement
 
 class Blinky(Ghost):
     def __init__(self):
-        Ghost.__init__(self, Coordinate(1, 1),
-                       pg.image.load("assets/images/blinky.png"))
+        Ghost.__init__(self, pg.image.load("assets/images/blinky.png"))
 
     def move(self):
         next_move = r.choice(list(Movement))
