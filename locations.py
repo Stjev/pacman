@@ -72,6 +72,16 @@ class Coordinate:
 
         return Coordinate(newx, newy)
 
+    def go_in_direction(self, direction):
+        if direction == Movement.UP:
+            self.add(0, -1)
+        elif direction == Movement.RIGHT:
+            self.add(1, 0)
+        elif direction == Movement.DOWN:
+            self.add(0, 1)
+        elif direction == Movement.LEFT:
+            self.add(-1, 0)
+
     def copy(self, other):
         self.x = other.x
         self.y = other.y
@@ -93,3 +103,10 @@ class Movement(enum.Enum):
     RIGHT = 1
     DOWN = 2
     LEFT = 3
+
+    @staticmethod
+    def inverses(movement1, movement2):
+        return (movement1 == Movement.UP and movement2 == Movement.DOWN) or \
+            (movement1 == Movement.LEFT and movement2 == Movement.RIGHT) or \
+            (movement2 == Movement.UP and movement1 == Movement.DOWN) or \
+            (movement2 == Movement.LEFT and movement1 == Movement.RIGHT)
