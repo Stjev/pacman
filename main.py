@@ -3,31 +3,35 @@ import time
 
 from input_handler import Input_handler
 from painter import Painter
-from entity import Pacman
+from game_state import update_game_state
+from entity.pacman import Pacman
+from entity.blinky import Blinky
+from entity.pinky import Pinky
+from entity.inky import Inky
+from entity.clyde import Clyde
 
 from locations import Movement
 
 
-def update():
-    return
-
-
 def setup():
     pg.init()
-    size = width, height = 448, 496
+    size = 448, 496
     screen = pg.display.set_mode(size)
     pg.display.set_caption('Pacman')
 
     return screen
-
-# TODO: https://stackoverflow.com/questions/54981456/how-to-implement-a-pygame-timed-game-loop
 
 
 def start_game():
     screen = setup()
 
     pacman = Pacman()
-    painter = Painter(screen, pacman, None, None, None, None)
+    blinky = Blinky()
+    pinky = Pinky()
+    inky = Inky()
+    clyde = Clyde()
+
+    painter = Painter(screen, pacman, blinky, pinky, inky, clyde)
 
     input_handler = Input_handler()
 
@@ -37,8 +41,8 @@ def start_game():
         events = pg.event.get()
 
         input_handler.get_input(pacman, events)
+        update_game_state(pacman, [blinky, pinky, inky, clyde])
 
-        update()
         painter.draw()
 
         pg.display.update()

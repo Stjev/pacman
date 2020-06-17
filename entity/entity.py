@@ -1,5 +1,4 @@
 import pygame as pg
-
 from locations import Movement, Coordinate
 
 
@@ -30,16 +29,3 @@ class Entity:
         elif movement == Movement.LEFT:
             self.direction = movement
             self.location.add_if_valid(-1, 0)
-
-
-class Ghost(Entity):
-    def __init__(self, location, image):
-        Entity.__init__(self, location, image)
-
-        self.vulnerable = False
-
-
-class Pacman(Entity):
-    def __init__(self):
-        Entity.__init__(self, Coordinate(13, 23),
-                        pg.image.load("assets/images/pacman.png"))

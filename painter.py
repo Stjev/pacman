@@ -15,3 +15,7 @@ class Painter():
     def draw(self):
         self.screen.blit(self.bg, [0, 0])  # draw the background
         self.pacman.draw(self.screen)
+        self.blinky.draw(self.screen)
+        self.pinky.draw(self.screen)
+        self.inky.draw(self.screen)
+        self.clyde.draw(self.screen)
