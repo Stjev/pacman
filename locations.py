@@ -1,5 +1,6 @@
 import json
 import enum
+import math
 
 
 class Location:
@@ -32,6 +33,9 @@ class Location:
 
     def is_valid_for_ghosts(self, coordinate):
         return coordinate in self.valid or coordinate in self.ghost_only
+
+    def get_valid_for_ghosts_coords(self):
+        return self.is_valid_for_ghosts
 
 
 class Coordinate:
@@ -86,11 +90,18 @@ class Coordinate:
         self.x = other.x
         self.y = other.y
 
+    def manhatten_distance(self, other):
+        return abs(self.x - other.x) + abs(self.y - other.y)
+
     def to_screen_coordinate(self):
         return [self.x * 16 - 2, self.y * 16 - 2]
 
     def __str__(self):
         return "(" + str(self.x) + ", " + str(self.y) + ")"
+
+    # get the neighbours of the current coordinate
+    def get_neighbours(self):
+        return [self.add_create_new_coord(self.x + x, self.y + y) for (x, y) in [(-1, 0), (1, 0), (0, -1), (0, 1)]]
 
     def __eq__(self, other):
         if isinstance(other, Coordinate):
