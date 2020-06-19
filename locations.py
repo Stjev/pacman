@@ -35,7 +35,7 @@ class Location:
         return coordinate in self.valid or coordinate in self.ghost_only
 
     def get_valid_for_ghosts_coords(self):
-        return self.is_valid_for_ghosts
+        return self.valid + self.ghost_only
 
 
 class Coordinate:
@@ -101,7 +101,14 @@ class Coordinate:
 
     # get the neighbours of the current coordinate
     def get_neighbours(self):
-        return [self.add_create_new_coord(self.x + x, self.y + y) for (x, y) in [(-1, 0), (1, 0), (0, -1), (0, 1)]]
+        unfiltered = [self.add_create_new_coord(
+            x, y) for (x, y) in [(-1, 0), (1, 0), (0, -1), (0, 1)]]
+        filtered = [
+            coord for coord in unfiltered if Location.get_instance().is_valid_for_ghosts(coord)]
+        return filtered
+
+    def __hash__(self):
+        return self.x * 100 + self.y
 
     def __eq__(self, other):
         if isinstance(other, Coordinate):

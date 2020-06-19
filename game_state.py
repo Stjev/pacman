@@ -3,7 +3,7 @@ import ctypes
 
 
 def update_game_state(pacman, ghosts):
-    update_ghosts(ghosts)
+    update_ghosts(pacman.location, ghosts)
 
     for ghost in ghosts:
         if ghost.location == pacman.location:

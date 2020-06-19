@@ -20,6 +20,6 @@ class Ghost(Entity):
         super().move(self.movement)
 
 
-def update_ghosts(ghosts):
+def update_ghosts(pacman_location, ghosts):
     for ghost in ghosts:
-        ghost.move()
+        ghost.move(pacman_location)

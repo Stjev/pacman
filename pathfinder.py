@@ -1,4 +1,4 @@
-from locatations import Location
+from locations import Location
 
 
 def h(current, end):
@@ -10,7 +10,7 @@ def g(current, start):
 
 
 def a_star(start, end):
-    location = Location.getInstance()
+    location = Location.get_instance()
 
     open_set = {start}
     came_from = dict()
@@ -23,15 +23,14 @@ def a_star(start, end):
 
     while len(open_set) > 0:
         # get the coordinate with the lowest value
-        current = min(fscore, key=fscore.get)
+        current = min(open_set, key=lambda x: fscore[x])
 
         if current == end:
-            print("found shortest path")
-            return
+            return get_first_step(start, came_from, end)
 
         open_set.remove(current)
-        for neighbour in [coord for coord in current.get_neighbours() if location.is_valid_for_ghosts(coord)]:
-            tentative_gScore = gscore(current) + 1
+        for neighbour in [coord for coord in current.get_neighbours()]:
+            tentative_gScore = gscore[current] + 1
 
             if tentative_gScore < gscore[neighbour]:
                 came_from[neighbour] = current
@@ -39,3 +38,10 @@ def a_star(start, end):
                 fscore[neighbour] = gscore[neighbour] + h(neighbour, end)
                 if neighbour not in open_set:
                     open_set.add(neighbour)
+
+
+def get_first_step(start, came_from, current):
+    while came_from[current] != start:
+        current = came_from[current]
+
+    return current
